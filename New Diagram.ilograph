@@ -1,0 +1,78 @@
+resources:
+- name: Metamodel
+  subtitle: Parent Resource
+  color: navy
+  children:
+  - name: Capability A
+    subtitle: An ability of the organization
+    children:
+    - id: Service A
+      name: Service A
+      
+    - id: Component A
+      name: Component A
+      
+    - id: Application A
+      name: Application A
+      
+    - id: Process A
+      name: Process A
+      
+    - id: Function A
+      name: Function A
+      
+    - id: Initiative A
+      name: Initiative A
+    
+    - id: OKRs A
+      name: OKRs A
+      subtitle: Aligned to top of house
+      
+    
+  - name: Capability B
+    subtitle: Another capability
+    description: This is an extended description
+    
+  - name: Resource C
+    subtitle: A third resource
+    
+  - name: Resource D
+    subtitle: A fourth resource
+    color: firebrick
+    
+perspectives:
+- name: Sample
+  defaultRelationLabel: depends on 
+  color: royalblue
+  relations:
+  - from: Service A
+    to: Function A
+    
+  - from: Function A
+    to: Component A
+    
+  - from: Component A
+    to: Application A
+    
+  - from: Application A
+    to: Initiative A
+    
+  - from: Initiative A
+    to: OKRs A
+    
+  - from: Capability A
+    to: Capability B
+    
+  - from: Capability B
+    to: Resource C
+    
+  - from: Capability B
+    to: Resource D
+    label: Custom label
+    
+  notes: |-
+    Welcome to your ilograph.
+
+    Your ilograph comes pre-populated with resources and a sample perspective. **The editable source is in the window to the left**.
+
+    Need Help? Check out the [introduction to IDL](https://blog.ilograph.com/posts/idl-1/) and the [IDL Spec](https://blog.ilograph.com/posts/idl-spec/). Additional resources are available on the [ilograph blog](https://blog.ilograph.com/).
