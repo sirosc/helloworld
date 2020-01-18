@@ -5,17 +5,14 @@ resources:
   children:
   - name: Bank
     backgroundColor: Red
-    
     children:
     - id: SOR
       name: Systems of Record
-      
     - id: Ref
       name: Systems of Reference
-      
-    - id: GS
-      name: Golden Sources
-      
+      children: 
+      - id: GS
+        name: Golden Sources
     - id: DG
       name: Data Gateway
       
@@ -124,8 +121,6 @@ perspectives:
   relations:
   
   - from: SOR
-    to: DG
-  - from: Ref
     to: DG
   - from: GS
     to: DG
