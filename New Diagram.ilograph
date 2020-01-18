@@ -19,12 +19,14 @@ resources:
     - id: DG
       name: Data Gateway
       
+      
   - id: Reg
     name: Regulatory Reporting
     backgroundColor: Red
     children: 
     - id: AXM
       name: Axiom
+    
       
   - id: AWS
     name: AWS
@@ -36,22 +38,23 @@ resources:
       children: 
       - id: RawT
         name: Raw Topics
-      
       - id: StdT
         name: Standard Topics
+      - id: RawPT
+        name: Raw Party Topics
+      - id: StdPT
+        name: Standard Party Topics
     
     - id: EDP
       name: Core EDP
       children: 
       - id: SP
         name: Stream Processor
-      
       - id: DV
         name: Data Vault
         children: 
         - id: RDV
           name: Raw Data Vault
-        
         - id: BDV
           name: Business Data Vault
     
@@ -60,10 +63,30 @@ resources:
       children: 
       - id: DLM
         name: Data Lake Management
-      
       - id: DLS
         name: Data Lake Storage
     
+    - id: PMDM
+      name: Party Master Data Management
+      children: 
+      - id: PDV
+        name: Party Data Vault
+        children: 
+        - id: RPDV
+          name: Raw Party Data Vault
+        - id: BPDV
+          name: Business Party Data Vault
+      - id: PSP
+        name: Party Stream Processor
+    
+    - id: PDL
+      name: Party Data Lake
+      children: 
+      - id: PDLS
+        name: Party Data Lake Storage
+      - id: PDLM
+        name: Party Data Lake Management
+        
     - id: DSL
       name: Serving Layer
       children: 
@@ -84,7 +107,6 @@ resources:
         children: 
         - id: EDF
           name: Enterprise Dims and Facts
-        
         - id: BDF
           name: Business Dims and Facts
       
@@ -96,60 +118,66 @@ resources:
     
     
 perspectives:
-- name: Top Level
+- name: SORs
   defaultRelationLabel: flows to 
   color: royalblue
   relations:
+  
   - from: SOR
     to: DG
-    
-  - from: DLS
-    to: EDF
-    
-  - from: EDF
-    to: BDF
-    
-  - from: DLM
-    to: DLS
-    
-  - from: DLS
-    to: DAPIs
-    
   - from: Ref
     to: DG
-    
   - from: GS
     to: DG
-    
   - from: DG
     to: RawT
-    
+  - from: DG
+    to: PDV
+  
+  
   - from: RawT
     to: SP
-    
   - from: SP
     to: RDV
-    
   - from: RDV
     to: BDV
-    
   - from: BDV
     to: SP
-    
   - from: SP
-    to: StdT
+    to: StdT 
     
-  - from: DG
-    to: EDL
+    
+  - from: RawPT
+    to: PSP
+  - from: PSP
+    to: RPDV
+  - from: RPDV
+    to: BPDV
+  - from: BPDV
+    to: PSP
+  - from: PSP
+    to: StdPT
+  
   
   - from: StdT
-    to: EDL
-    
+    to: DLS
+  - from: DLS
+    to: EDF, SOFs, DAPIs
+  - from: DLM
+    to: DLS
+   
+   
+  - from: StdPT
+    to: PDLS
+  - from: PDLM
+    to: PDLS
+  - from: PDLS
+    to: SOFs, DAPIs, EDF
+ 
+  - from: EDF
+    to: BDF
   - from: StdT
     to: PubT
-    
-  - from: DLS
-    to: SOFs
     
   - from: SOFs
     to: AXM
