@@ -19,14 +19,62 @@ resources:
       name: Data Gateway
       
     
+  - id: Bus
+    name: Kafka Bus
+    children: 
+    - id: RawT
+      name: Raw Topics
+      
+    - id: StdT
+      name: Standard Topics
+    
   - id: EDP
     name: Core EDP
+    children: 
+    - id: SP
+      name: Stream Processor
+      
+    - id: DV
+      name: Data Vault
+      children: 
+      - id: RDV
+        name: Raw Data Vault
+        
+      - id: BDV
+        name: Business Data Vault
     
   - id: EDL
     name: Data Lake
+    children: 
+    - id: DLM
+      name: Data Lake Management
+      
+    - id: DLS
+      name: Data Lake Storage
     
   - id: DSL
     name: Serving Layer
+    children: 
+    - id: Events
+      name: Events
+      
+    - id: APIs
+      name: APIs
+      
+    - id: DMs
+      name: Info Marts
+      children: 
+      - id: EDF
+        name: Enterprise Dims and Facts
+        
+      - id: BDF
+        name: Business Dims and Facts
+      
+    - id: Datasets
+      name: Datasets
+      children: 
+      - id: SOFs
+        name: SOFs
     
     
 perspectives:
@@ -37,8 +85,15 @@ perspectives:
   - from: SOR
     to: DG
     
-  - from: EDL
-    to: DSL
+  - from: DLS
+    to: EDF
+    
+  - from: EDF
+    to: BDF
+    
+    
+  - from: DLS
+    to: APIs
     
   - from: Ref
     to: DG
@@ -47,13 +102,34 @@ perspectives:
     to: DG
     
   - from: DG
-    to: EDP
+    to: RawT
     
-  - from: EDP
+  - from: RawT
+    to: SP
+    
+  - from: SP
+    to: RDV
+    
+  - from: RDV
+    to: BDV
+    
+  - from: BDV
+    to: SP
+    
+  - from: SP
+    to: StdT
+    
+  - from: DG
+    to: EDL
+  
+  - from: StdT
     to: EDL
     
-
+  - from: StdT
+    to: Events
     
+  - from: DLS
+    to: SOFs
     
   notes: |-
     Welcome to your ilograph.
