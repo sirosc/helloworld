@@ -3,72 +3,57 @@ resources:
   subtitle: Parent Resource
   color: navy
   children:
-  - name: Capability A
-    subtitle: An ability of the organization
+  - name: Bank
+    
     children:
-    - id: Service A
-      name: Service A
+    - id: SOR
+      name: Systems of Record
       
-    - id: Component A
-      name: Component A
+    - id: Ref
+      name: Systems of Reference
       
-    - id: Application A
-      name: Application A
+    - id: GS
+      name: Golden Sources
       
-    - id: Process A
-      name: Process A
-      
-    - id: Function A
-      name: Function A
-      
-    - id: Initiative A
-      name: Initiative A
-    
-    - id: OKRs A
-      name: OKRs A
-      subtitle: Aligned to top of house
+    - id: DG
+      name: Data Gateway
       
     
-  - name: Capability B
-    subtitle: Another capability
-    description: This is an extended description
+  - id: EDP
+    name: Core EDP
     
-  - name: Resource C
-    subtitle: A third resource
+  - id: EDL
+    name: Data Lake
     
-  - name: Resource D
-    subtitle: A fourth resource
-    color: firebrick
+  - id: DSL
+    name: Serving Layer
+    
     
 perspectives:
 - name: Sample
-  defaultRelationLabel: depends on 
+  defaultRelationLabel: flows to 
   color: royalblue
   relations:
-  - from: Service A
-    to: Function A
+  - from: SOR
+    to: DG
     
-  - from: Function A
-    to: Component A
+  - from: EDL
+    to: DSL
     
-  - from: Component A
-    to: Application A
+  - from: Ref
+    to: DG
     
-  - from: Application A
-    to: Initiative A
+  - from: GS
+    to: DG
     
-  - from: Initiative A
-    to: OKRs A
+  - from: DG
+    to: EDP
     
-  - from: Capability A
-    to: Capability B
+  - from: EDP
+    to: EDL
     
-  - from: Capability B
-    to: Resource C
+
     
-  - from: Capability B
-    to: Resource D
-    label: Custom label
     
   notes: |-
     Welcome to your ilograph.
