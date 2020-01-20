@@ -131,7 +131,7 @@ perspectives:
   - from: DG
     to: RawT
   - from: DG
-    to: PDV
+    to: RawPT
   
   
   - from: RawT
@@ -180,6 +180,10 @@ perspectives:
     
   - from: SOFs
     to: AXM
+  - from: BDF
+    to: FRR
+  - from: BDF
+    to: NFRR
     
     
 - name: GS
