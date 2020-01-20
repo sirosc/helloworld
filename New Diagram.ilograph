@@ -17,12 +17,16 @@ resources:
       name: Data Gateway
       
       
-  - id: Reg
-    name: Regulatory Reporting
+  - id: Reporting
+    name: Risk & Regulatory Reporting
     backgroundColor: Red
     children: 
     - id: AXM
       name: Axiom
+    - id: FRR
+      name: Financial Risk Reporting
+    - id: NFRR
+      name: Non-Financial Risk Reporting
     
       
   - id: AWS
@@ -176,6 +180,28 @@ perspectives:
     
   - from: SOFs
     to: AXM
+    
+    
+- name: GS
+  defaultRelationLabel: flows to 
+  color: royalblue
+  relations:
+  - from: GS
+    to: DG
+  - from: DG
+    to: DLS
+  - from: DLS
+    to: EDF
+  - from: EDF
+    to: BDF
+  - from: DLS
+    to: SOFs
+  - from: SOFs
+    to: AXM
+  - from: BDF
+    to: FRR
+  - from: BDF
+    to: NFRR
     
   notes: |-
     Welcome to your ilograph.
