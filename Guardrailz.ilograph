@@ -141,8 +141,6 @@ perspectives:
     to: LoggingAcct
   - from: MasterAcct
     to: SharedSvcAcct
-  - from: MasterAcct
-    to: WorkloadAccts
   - from: SecurityAcct
     to: WorkloadAccts
   - from: LoggingAcct
