@@ -19,8 +19,10 @@ resources:
         name: Single Sign-on (SSO)
       - id: MasterGZEng
         name: Master Account Guardrailz Engine
+        backgroundColor: LightSteelBlue
       - id: GZTags
         name: Guardrailz Tag Model (Master)
+        backgroundColor: LightSteelBlue
        
         
     - id: DevStack
@@ -28,6 +30,7 @@ resources:
       children: 
       - id: GZDev
         name: Guardrailz Dev Components
+        backgroundColor: LightSteelBlue
         children: 
         - id: SecModel
           name: Security Model
@@ -52,7 +55,7 @@ resources:
     - id: SecurityAcct
       name: Security Account
       children: 
-      - id: SecAcctyPolicy
+      - id: SecAcctPolicy
         name: Security Account Policies
       - id: SecEvents
         name: Security Events
@@ -80,23 +83,26 @@ resources:
         name: Shared Database
       - id: ShareGZEng
         name: Shared Services Guardrailz Engine
+        backgroundColor: LightSteelBlue
         
         
     - id: WorkloadAccts
       name: Workload Accounts
       children: 
-      - id: WorkloadA
+      - id: WorkloadAcctA
         name: Workload Account A
         children: 
         - id: WorkAPolicy
           name: Workload Account A Policies
         - id: WorkConfigRules
-          name: WorkConfig Rules
+          name: Workload Config Rules
         - id: WorkGZEng
           name: Workload Guardrailz Engine
+          backgroundColor: LightSteelBlue
         - id: GZWorkTags
           name: Guardrailz Tag Model (Workloads)
-        - id: WorkA
+          backgroundColor: LightSteelBlue
+        - id: WorkloadA
           name: Workload A
         - id: EKSControl
           name: EKS Control Plane
@@ -125,9 +131,9 @@ resources:
             - id: NodeB2
               name: Node B2
           
-      - id: WorkloadB
+      - id: WorkloadAcctB
         name: Workload Account B
-      - id: WorkloadC
+      - id: WorkloadAcctC
         name: Workload Account C
     
 perspectives:
@@ -160,8 +166,56 @@ perspectives:
     to: WorkAPolicy
     label: Control Pipeline
   - from: DevStack
-    to: WorkA
+    to: WorkloadA
     label: Workload Pipeline
+  - from: DevStack
+    to: LogAcctPolicy
+    label: Control Pipeline
+  - from: DevStack
+    to: SecAcctPolicy
+    label: Control Pipeline
     
   notes: |-
     Primary pipelines in scope of the Guardrailz Landing Zone model
+    
+- name: Policies
+  defaultRelationLabel: Deploys to
+  relations: 
+  - from: PluginOrch
+    to: OrgPolicy
+  
+  - from: PluginOrch
+    to: LogAcctPolicy
+  - from: PluginOrch
+    to: SharedSvcAcctPolicy
+    
+  - from: PluginOrch
+    to: WorkAPolicy
+  - from: PluginOrch
+    to: WorkAPolicy
+
+
+- name: Security
+  relations: 
+  - from: SecurityAcct
+    to: WorkloadAccts
+  - from: SecurityAcct
+    to: LoggingAcct
+  - from: SecurityAcct
+    to: SharedSvcAcct
+  
+  
+- name: Logging
+  
+  
+- name: Shared Services
+  
+  
+- name: Workload
+  relations: 
+  - from: WorkAPolicy
+    to: WorkloadA
+  - from: WorkloadA
+    to: EKSNodeGrpA
+  - from: WorkloadA
+    to: EKSNodeGrpB
