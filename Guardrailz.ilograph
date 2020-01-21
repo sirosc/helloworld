@@ -19,6 +19,9 @@ resources:
         name: Single Sign-on (SSO)
       - id: MasterGZEng
         name: Master Account Guardrailz Engine
+      - id: GZTags
+        name: Guardrailz Tag Model (Master)
+       
         
     - id: DevStack
       name: Development Stack
@@ -45,6 +48,7 @@ resources:
       - id: WorkPkgs
         name: Control Workload Packages
         
+        
     - id: SecurityAcct
       name: Security Account
       children: 
@@ -55,6 +59,7 @@ resources:
       - id: GuardDuty
         name: Guard Duty
         
+        
     - id: LoggingAcct
       name: Logging Account
       children: 
@@ -62,6 +67,7 @@ resources:
         name: Logging Account Policies
       - id: CloudTrailLogs
         name: Cloudtrail Logs
+        
         
     - id: SharedSvcAcct
       name: Shared Services Account
@@ -75,6 +81,7 @@ resources:
       - id: ShareGZEng
         name: Shared Services Guardrailz Engine
         
+        
     - id: WorkloadAccts
       name: Workload Accounts
       children: 
@@ -87,6 +94,8 @@ resources:
           name: WorkConfig Rules
         - id: WorkGZEng
           name: Workload Guardrailz Engine
+        - id: GZWorkTags
+          name: Guardrailz Tag Model (Workloads)
         - id: WorkA
           name: Workload A
         - id: EKSControl
@@ -147,7 +156,7 @@ perspectives:
 - name: Pipelines
   relations: 
   - from: DevStack
-    to: MasterAcct
+    to: OrgPolicy
     label: Control Pipeline
   - from: DevStack
     to: WorkAPolicy
@@ -155,3 +164,6 @@ perspectives:
   - from: DevStack
     to: WorkA
     label: Workload Pipeline
+    
+  notes: |-
+    Primary pipelines in scope of the Guardrailz Landing Zone model
