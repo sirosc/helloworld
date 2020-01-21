@@ -8,14 +8,85 @@ resources:
     children: 
     - id: MasterAcct
       name: Master Account 
+      children: 
+      - id: OrgPolicy
+        name: Org Policies
+      - id: CoreOU
+        name: Core OU
+      - id: Orgs
+        name: Organizations
+      - id: SSO
+        name: Single Sign-on (SSO)
+        
     - id: SecurityAcct
       name: Security Account
+      children: 
+      - id: SecAcctyPolicy
+        name: Security Account Policies
+      - id: SecEvents
+        name: Security Events
+      - id: GuardDuty
+        name: Guard Duty
+        
     - id: LoggingAcct
       name: Logging Account
+      children: 
+      - id: LogAcctPolicy
+        name: Logging Account Policies
+      - id: CloudTrailLogs
+        name: Cloudtrail Logs
+        
     - id: SharedSvcAcct
       name: Shared Services Account
+      children: 
+      - id: SharedSvcAcctPolicy
+        name: Shared Services Account Policies
+      - id: TransitGW
+        name: Transit Gateway
+      - id: SharedDB
+        name: Shared Database
+        
     - id: WorkloadAccts
       name: Workload Accounts
+      children: 
+      - id: WorkloadA
+        name: Workload Account A
+        children: 
+        - id: WkldAPolicy
+          name: Workload Account A Policies
+        - id: ConfigRules
+          name: Config Rules
+        - id: EKSControl
+          name: EKS Control Plane
+          children: 
+          - id: EKSCtlAZ1
+            name: EKS Control AZ1
+          - id: EKSCtlAZ2
+            name: EKS Control AZ2
+          - id: EKSCtlAZ3
+            name: EKS Control AZ3
+        - id: EKSWorkload
+          name: EKS Workload Nodes
+          children: 
+          - id: EKSNodeGrpA
+            name: EKS Managed Node Group A
+            children: 
+            - id: NodeA1
+              name: Node A1
+            - id: NodeA2
+              name: Node A2
+          - id: EKSNodeGrpB
+            name: EKS Managed Node Group B
+            children: 
+            - id: NodeB1
+              name: Node B1
+            - id: NodeB2
+              name: Node B2
+          
+      - id: WorkloadB
+        name: Workload Account B
+      - id: WorkloadC
+        name: Workload Account C
     
 perspectives:
 - name: Top
