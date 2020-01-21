@@ -1,0 +1,47 @@
+resources:
+- name: Landing Zone
+  subtitle: Cloud Landing Zone
+  color: navy
+  children:
+  - id: MasterOrg
+    name: Master Organization
+    children: 
+    - id: MasterAcct
+      name: Master Account 
+    - id: SecurityAcct
+      name: Security Account
+    - id: LoggingAcct
+      name: Logging Account
+    - id: SharedSvcAcct
+      name: Shared Services Account
+    - id: WorkloadAccts
+      name: Workload Accounts
+    
+perspectives:
+- name: Top
+  defaultRelationLabel: Provides Services to
+  color: royalblue
+  relations:
+  - from: MasterOrg
+    to: MasterAcct
+  - from: MasterAcct
+    to: SecurityAcct
+  - from: MasterAcct
+    to: LoggingAcct
+  - from: MasterAcct
+    to: SharedSvcAcct
+  - from: MasterAcct
+    to: WorkloadAccts
+  - from: SecurityAcct
+    to: WorkloadAccts
+  - from: LoggingAcct
+    to: WorkloadAccts
+  - from: SharedSvcAcct
+    to: WorkloadAccts
+    
+  notes: |-
+    Welcome to your ilograph.
+
+    Your ilograph comes pre-populated with resources and a sample perspective. **The editable source is in the window to the left**.
+
+    Need Help? Check out the [introduction to IDL](https://blog.ilograph.com/posts/idl-1/) and the [IDL Spec](https://blog.ilograph.com/posts/idl-spec/). Additional resources are available on the [ilograph blog](https://blog.ilograph.com/).
