@@ -17,6 +17,33 @@ resources:
         name: Organizations
       - id: SSO
         name: Single Sign-on (SSO)
+      - id: MasterGZEng
+        name: Master Account Guardrailz Engine
+        
+    - id: DevStack
+      name: Development Stack
+      children: 
+      - id: GZDev
+        name: Guardrailz Dev Components
+        children: 
+        - id: SecModel
+          name: Security Model
+        - id: PluginOrch
+          name: Plug-in Orchestrator (Go)
+      - id: IaC
+        name: Infrastructure as Code (IaC)
+        children: 
+        - id: IaCTemp
+          name: IaC Templates
+        - id: IaCConfig
+          name: IaC Config
+      - id: SSP
+        name: Security Plans
+        children: 
+        - id: OSCAL
+          name: OSCAL
+      - id: WorkPkgs
+        name: Control Workload Packages
         
     - id: SecurityAcct
       name: Security Account
@@ -45,6 +72,8 @@ resources:
         name: Transit Gateway
       - id: SharedDB
         name: Shared Database
+      - id: ShareGZEng
+        name: Shared Services Guardrailz Engine
         
     - id: WorkloadAccts
       name: Workload Accounts
@@ -52,10 +81,14 @@ resources:
       - id: WorkloadA
         name: Workload Account A
         children: 
-        - id: WkldAPolicy
+        - id: WorkAPolicy
           name: Workload Account A Policies
-        - id: ConfigRules
-          name: Config Rules
+        - id: WorkConfigRules
+          name: WorkConfig Rules
+        - id: WorkGZEng
+          name: Workload Guardrailz Engine
+        - id: WorkA
+          name: Workload A
         - id: EKSControl
           name: EKS Control Plane
           children: 
@@ -93,8 +126,6 @@ perspectives:
   defaultRelationLabel: Provides Services to
   color: royalblue
   relations:
-  - from: MasterOrg
-    to: MasterAcct
   - from: MasterAcct
     to: SecurityAcct
   - from: MasterAcct
@@ -111,8 +142,16 @@ perspectives:
     to: WorkloadAccts
     
   notes: |-
-    Welcome to your ilograph.
-
-    Your ilograph comes pre-populated with resources and a sample perspective. **The editable source is in the window to the left**.
-
-    Need Help? Check out the [introduction to IDL](https://blog.ilograph.com/posts/idl-1/) and the [IDL Spec](https://blog.ilograph.com/posts/idl-spec/). Additional resources are available on the [ilograph blog](https://blog.ilograph.com/).
+    Top Level Structure for the LZ
+    
+- name: Pipelines
+  relations: 
+  - from: DevStack
+    to: MasterAcct
+    label: Control Pipeline
+  - from: DevStack
+    to: WorkAPolicy
+    label: Control Pipeline
+  - from: DevStack
+    to: WorkA
+    label: Workload Pipeline
