@@ -9,20 +9,29 @@ resources:
     - id: MasterAcct
       name: Master Account 
       children: 
-      - id: OrgPolicy
-        name: Org Policies
-      - id: CoreOU
-        name: Core OU
-      - id: Orgs
-        name: Organizations
-      - id: SSO
-        name: Single Sign-on (SSO)
-      - id: MasterGZEng
-        name: Master Account Guardrailz Engine
-        backgroundColor: LightSteelBlue
-      - id: GZTags
-        name: Guardrailz Tag Model (Master)
-        backgroundColor: LightSteelBlue
+      - id: PolicyMgmt
+        name: Policy Management
+        children: 
+        - id: OrgPolicy
+          name: Org Policies
+      - id: IAM
+        name: Identity & Access Management
+        children: 
+        - id: CoreOU
+          name: Core Org Unit (OU)
+        - id: Orgs
+          name: AWS Organizations
+        - id: SSO
+          name: Single Sign-on (SSO)
+      - id: GZ
+        name: Guardrailz
+        children: 
+        - id: MasterGZEng
+          name: Master Account Guardrailz Engine
+          backgroundColor: LightSteelBlue
+        - id: GZTags
+          name: Guardrailz Tag Model (Master)
+          backgroundColor: LightSteelBlue
        
         
     - id: DevStack
