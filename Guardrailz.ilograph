@@ -25,40 +25,48 @@ resources:
           name: Single Sign-on (SSO)
       - id: GZ
         name: Guardrailz
+        backgroundColor: LightSteelBlue
         children: 
         - id: MasterGZEng
           name: Master Account Guardrailz Engine
-          backgroundColor: LightSteelBlue
         - id: GZTags
           name: Guardrailz Tag Model (Master)
-          backgroundColor: LightSteelBlue
-       
-        
-    - id: DevStack
-      name: Development Stack
-      children: 
-      - id: GZDev
-        name: Guardrailz Dev Components
-        backgroundColor: LightSteelBlue
-        children: 
-        - id: SecModel
-          name: Security Model
-        - id: PluginOrch
-          name: Plug-in Orchestrator (Go)
-      - id: IaC
-        name: Infrastructure as Code (IaC)
-        children: 
-        - id: IaCTemp
-          name: IaC Templates
-        - id: IaCConfig
-          name: IaC Config
-      - id: SSP
-        name: Security Plans
-        children: 
-        - id: OSCAL
-          name: OSCAL
-      - id: WorkPkgs
-        name: Control Workload Packages
+        - id: MasterGZPluginOrch
+          name: Master Account GZ Plugin Orchestrator
+        - id: MasterGoPlugins
+          name: Go Plugins
+          children: 
+          - id: S3Plugin
+            name: S3 Plugin
+          - id: EC2Plugin
+            name: EC2 Plugin
+          - id: VPCPlugin
+            name: VPC Plugin
+          - id: IAMPlugin
+            name: IAM Plugin
+          - id: RDS Plugin
+            name: RDS Plugin
+          - id: ConfigRulePlugin
+            name: Config Rule Plugin
+          - id: etcPlugin
+            name: etc...
+        - id: MasterIaCTemp
+          name: Master IaC Templates
+          children: 
+          - id: S3IAC
+            name: S3 IaC Template
+          - id: EC2IAC
+            name: EC2 IaC Template
+          - id: VPCIAC
+            name: VPC IaC Template
+          - id: IAMIAC
+            name: IAM IaC Template
+          - id: RDSIAC
+            name: RDS IAC Template
+          - id: ConfigRuleIAC
+            name: Config Rule IaC Template
+          - id: etcIAC
+            name: etc...
         
         
     - id: SecurityAcct
@@ -144,7 +152,61 @@ resources:
         name: Workload Account B
       - id: WorkloadAcctC
         name: Workload Account C
-    
+
+- id: DevStack
+  name: Development Stack
+  children: 
+  - id: GZDev
+    name: Guardrailz Dev Components
+    backgroundColor: LightSteelBlue
+    children: 
+    - id: SecModel
+      name: Security Model
+    - id: PluginOrch
+      name: Plug-in Orchestrator (Go)
+  - id: IaC
+    name: Infrastructure as Code (IaC)
+    children: 
+    - id: IaCTemp
+      name: IaC Templates
+    - id: IaCConfig
+      name: IaC Config
+  - id: SSP
+    name: Security Plans
+    children: 
+    - id: OSCAL
+      name: OSCAL
+  - id: WorkPkgs
+    name: Control Workload Packages
+    children: 
+      - id: S3pkg
+        name: S3 AVRO Package
+      - id: EC2pkg
+        name: EC2 AVRO Package
+      - id: VPCpkg
+        name: VPC AVRO Package
+      - id: IAMpkg
+        name: IAM AVRO Package
+      - id: RDSpkg
+        name: RDS AVRO Package
+      - id: ConfigRulepkg
+        name: Config Rule AVRO Package
+      - id: etcpkg
+        name: etc...
+
+
+- id: Pipelines
+  name: Pipelines
+  children: 
+  - id: MasterPipe
+    name: Master Pipeline
+  - id: SecurityPipe
+    name: Security Pipeline
+  - id: LoggingPipe
+    name: Logging Pipeline
+  - id: SharedSvcPipe
+    name: Shared Services Pipeline
+     
 perspectives:
 - name: Top
   defaultRelationLabel: Provides Services to
@@ -165,27 +227,29 @@ perspectives:
     
   notes: |-
     Top Level Structure for the LZ
+  
     
 - name: Pipelines
-  relations: 
-  - from: DevStack
-    to: OrgPolicy
-    label: Control Pipeline
-  - from: DevStack
-    to: WorkAPolicy
-    label: Control Pipeline
-  - from: DevStack
-    to: WorkloadA
-    label: Workload Pipeline
-  - from: DevStack
-    to: LogAcctPolicy
-    label: Control Pipeline
-  - from: DevStack
-    to: SecAcctPolicy
-    label: Control Pipeline
-    
+  relations:
+  - from: WorkPkgs
+    to: MasterPipe
+    label: Publish as event
+  - from: MasterPipe
+    to: MasterGZEng
+    label: Read event
+  - from: MasterGZEng
+    to: MasterGZPluginOrch
+    label: invokes
+  - from: MasterGZPluginOrch
+    to: MasterGoPlugins
+    label: invokes
+  - from: MasterGoPlugins
+    to: MasterIaCTemp
+    label: invokes
+
   notes: |-
     Primary pipelines in scope of the Guardrailz Landing Zone model
+    
     
 - name: Policies
   defaultRelationLabel: Deploys to
