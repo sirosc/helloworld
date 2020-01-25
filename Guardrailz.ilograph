@@ -209,7 +209,6 @@ resources:
      
 perspectives:
 - name: Top
-  defaultRelationLabel: Provides Services to
   color: royalblue
   relations:
   - from: MasterAcct
@@ -224,6 +223,9 @@ perspectives:
     to: WorkloadAccts
   - from: SharedSvcAcct
     to: WorkloadAccts
+  - from: DevStack
+    to: MasterOrg
+    label: Pipelines
     
   notes: |-
     Top Level Structure for the LZ
