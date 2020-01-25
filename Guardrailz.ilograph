@@ -28,11 +28,11 @@ resources:
         backgroundColor: LightSteelBlue
         children: 
         - id: MasterGZEng
-          name: Master Account Guardrailz Engine
+          name: Guardrailz Engine
         - id: GZTags
           name: Guardrailz Tag Model (Master)
         - id: MasterGZPluginOrch
-          name: Master Account GZ Plugin Orchestrator
+          name: Plugin Orchestrator
         - id: MasterGoPlugins
           name: Go Plugins
           children: 
@@ -51,7 +51,7 @@ resources:
           - id: etcPlugin
             name: etc...
         - id: MasterIaCTemp
-          name: Master IaC Templates
+          name: IaC Templates
           children: 
           - id: S3IAC
             name: S3 IaC Template
